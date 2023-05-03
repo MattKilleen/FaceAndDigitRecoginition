@@ -99,12 +99,17 @@ for i in range(len(x_test_raw)):
 
 ### YOUR CODE TO SET UP MODEL STRUCTURE HERE
 
+num_classes = 10
 
 def predict(row, weights):
     activation = weights[0]
     for i in range(len(row)-1):
         activation += weights[i + 1] * row[i]
     return 1.0 if activation >= 0.0 else 0.0
+
+weights = np.zeros(x_train.shape[1], num_classes)
+for row in x_test:
+    prediction = predict(row, weights)
 
 # Record Training Start Time
 start_time = time.time()
