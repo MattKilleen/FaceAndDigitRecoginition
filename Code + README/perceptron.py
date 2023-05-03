@@ -85,7 +85,11 @@ class PerceptronClassifier:
     """
         featuresWeights = []
 
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        weights = self.weights[label]
+
+        for i in range(100):
+            weight = weights.argMax()
+            featuresWeights.append(weight)
+            weights[weight] -= 99999999
 
         return featuresWeights
