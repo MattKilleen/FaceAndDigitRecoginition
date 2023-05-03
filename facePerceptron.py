@@ -3,7 +3,6 @@ import torch
 import time
 import zipfile
 import os
-import perceptron
 device = torch.device('cpu')
 
 # Define Dimension of Output Vector
@@ -99,6 +98,7 @@ for i in range(len(x_test_raw)):
     x_test[i] = x_test_raw[i].flatten()
 
 ### YOUR CODE TO SET UP MODEL STRUCTURE HERE
+
 
 # Record Training Start Time
 start_time = time.time()
