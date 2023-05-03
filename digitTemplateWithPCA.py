@@ -7,23 +7,23 @@ import matplotlib.pyplot as plt
 device = torch.device('cpu')
 
 # Define Dimension of Output Vector
-output_dimension = 2
+output_dimension = 10
 
 # Define Fraction of Training Data to be Used (1 is all training data, 0 is no training data, etc.)
 training_data_fraction = 1
 
-# Entire Training Dataset Consists of 451 Samples
-TRAINING_DATASET_SIZE = 451
+# Entire Training Dataset Consists of 5000 Samples
+TRAINING_DATASET_SIZE = 5000
 num_training_samples = TRAINING_DATASET_SIZE*training_data_fraction
 if num_training_samples > TRAINING_DATASET_SIZE or num_training_samples < 0:
     num_training_samples = TRAINING_DATASET_SIZE
 
-# Entire Test Dataset Consists of 150 Samples
-num_test_samples = 150
+# Entire Test Dataset Consists of 1000 Samples
+num_test_samples = 1000
 
 # Define Dimensions of Images
-IMAGE_WIDTH = 60
-IMAGE_HEIGHT = 70
+IMAGE_WIDTH = 28
+IMAGE_HEIGHT = 28
 
 
 # Method to Read Data from Zip - borrowed from Berkeley code
@@ -64,12 +64,12 @@ def loadLabelsFile(filename, n):
 
 
 # Import Data
-rawTrainingData = loadDataFile("facedata/facedatatrain", num_training_samples, IMAGE_WIDTH, IMAGE_HEIGHT)
-trainingLabels = loadLabelsFile("facedata/facedatatrainlabels", num_training_samples)
-rawValidationData = loadDataFile("facedata/facedatatrain", num_test_samples, IMAGE_WIDTH, IMAGE_HEIGHT)
-validationLabels = loadLabelsFile("facedata/facedatatrainlabels", num_test_samples)
-rawTestData = loadDataFile("facedata/facedatatest", num_test_samples, IMAGE_WIDTH, IMAGE_HEIGHT)
-testLabels = loadLabelsFile("facedata/facedatatestlabels", num_test_samples)
+rawTrainingData = loadDataFile("digitdata/trainingimages", num_training_samples, IMAGE_WIDTH, IMAGE_HEIGHT)
+trainingLabels = loadLabelsFile("digitdata/traininglabels", num_training_samples)
+rawValidationData = loadDataFile("digitdata/validationimages", num_test_samples, IMAGE_WIDTH, IMAGE_HEIGHT)
+validationLabels = loadLabelsFile("digitdata/validationlabels", num_test_samples)
+rawTestData = loadDataFile("digitdata/testimages", num_test_samples, IMAGE_WIDTH, IMAGE_HEIGHT)
+testLabels = loadLabelsFile("digitdata/testlabels", num_test_samples)
 
 
 # Preprocess dataset into numpy
@@ -170,6 +170,13 @@ for i in range(len(svd_x_train_centered[2])):
 
 x_train = np.matmul(x_train_centered, U)
 x_test = np.matmul(x_test_centered, U)
+
+### YOUR CODE TO SET UP MODEL STRUCTURE HERE
+
+# Record Training Start Time
+start_time = time.time()
+
+### YOUR TRAIN AND TEST CODE HERE
 
 ### YOUR CODE TO SET UP MODEL STRUCTURE HERE
 
