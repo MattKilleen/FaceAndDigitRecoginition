@@ -15,6 +15,13 @@ def PDF(input):
 def probability(x, prior, dist1, dist2):
     return prior * dist1.pdf(x[0]) * dist2.pdf(x[1])
 
+def testing(x, prior, dists):
+    prob = prior
+    for idx, val in enumerate(x):
+        prob = prob * dists[idx].pdf(val)
+    return prob
+
+
 # Define Dimension of Output Vector
 output_dimension = 10
 
@@ -148,7 +155,8 @@ for i in range(len(svd_x_train_centered[1])):
 # compute k such that the top-k principal components of the dataset capture at least 99% of the total energy
 sum = 0
 k = 0
-while k < 2:
+PCA_DIM = 10
+while k < PCA_DIM:
     sum += svd_x_train_centered[1][k] ** 2
     k = k + 1
 
@@ -179,7 +187,6 @@ priors = np.zeros(num_classes)
 
 # Record Training Start Time
 start_time = time.time()
-print(start_time)
 
 ### CALCULATING PRIORS
 
@@ -210,29 +217,36 @@ for x in range(num_classes):
 ### CALCULATING PROBABILITY DISTRIBUTION FUNCTIONS
 
 #Empty PDF list of size 10x2
-pdfs = [[None for j in range(2)] for i in range(10)]
+pdfs = [[None for j in range(PCA_DIM)] for i in range(10)]
 
 #Calculating distributions and storing each in the PDF list
 for x in range(num_classes):
-    pdfs[x][0] = PDF(classes[x][:,0])
-    pdfs[x][1] = PDF(classes[x][:,1])
+    for dim in range(PCA_DIM):
+        pdfs[x][dim] = PDF(classes[x][:,dim])
 
 #Setting counter for # of correct classifications
 correct = 0
 
 #Iterating through the testing data
 for index, sample in enumerate(x_test):
+
+    #Creating an empty list of probabilities for each sample
     probabilities = np.zeros(10)
+
+    #Calculating the probabilities based on the distributions and priors that we calculated earlier
     for idx in range(len(probabilities)):
-        probabilities[idx] = probability(sample, priors[idx], pdfs[idx][0], pdfs[idx][1])
+        #probabilities[idx] = probability(sample, priors[idx], pdfs[idx][0], pdfs[idx][1])
+        #probabilities[idx] = probabilities[idx]*100 #Multiplied by 100 for accuracy and readability
+        probabilities[idx] = testing(sample,priors[idx],pdfs[idx])
         probabilities[idx] = probabilities[idx]*100
-    
+
+    #Fetching index (classification) of the highest probability
     predicted = probabilities.argmax()
-    #print("Predicted:", predicted)
+    #Fetching the actual classification of the given sample
     actual = int(np.where(y_test[index] == 1)[0])
-    #print("Actual:", actual)
+
+    #Adding 1 to the correct count if the predicted label matches the actual label
     if(predicted==actual):
-        print("HIT!")
         correct += 1
 
 print("Total Correct:", correct)
@@ -241,8 +255,6 @@ print(accuracy)
 
 # Record Training End Time
 end_time = time.time()
-print(end_time)
 
 # Print Time Taken
 print("Time taken to train: {:.2f} seconds".format(end_time - start_time))
-
