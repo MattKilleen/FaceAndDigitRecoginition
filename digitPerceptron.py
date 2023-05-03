@@ -171,19 +171,11 @@ def perceptron(train, test, l_rate, n_epoch):
     predictions.append(prediction)
     return (predictions)
 
-
-print(x_train)
-# weights = np.zeros(x_train.shape[1], num_classes)
-
-# for row in x_train:
-#     prediction = predict(row, weights)
-
 # Record Training Start Time
 start_time = time.time()
 
 ### YOUR TRAIN AND TEST CODE HERE
 # Test the Perceptron algorithm on the sonar dataset
-seed(1)
 # evaluate algorithm
 n_folds = 3
 l_rate = 0.01
