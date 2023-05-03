@@ -7,35 +7,19 @@ import zipfile
 import math
 device = torch.device('cpu')
 
-# 1000 Decay - 4200,500,30,2:
-# 3000, 3e-7 = 0.607
-
-
-# 3000 Decay - 4200,700,30,2:
-# 3000, 3e-7 = 0.627, 0.593
-
-
-# 10000 Decay - 4200,500,30,2:
-# 3000, 3e-7 = 0.627
-# 3000, 5e-7 = 0.633
-
-
-# 100000 Decay - 4200,500,30,2:
-# 3000, 3e-7 = 0.513
-
-
-# 3000 Decay - 4200,1000,200,50,10,2:
-# 3000, 3e-7 = 0.513
+# 10000 Decay - 4200,700,100,15,2:
+# 7000, 3e-7 = 0.787 - WINNER
 
 # Set Hyperparameters
-num_epochs = 3000
-learning_rate = 5e-7
-decay_factor = 3000
+num_epochs = 7000
+learning_rate = 3e-7
+decay_factor = 10000
 
 # Set Dimensions of Each Layer
 input_dimension = 4200
-hidden_dimension_1 = 500
-hidden_dimension_2 = 30
+hidden_dimension_1 = 700
+hidden_dimension_2 = 100
+hidden_dimension_3 = 15
 output_dimension = 2
 
 # Define Fraction of Training Data to be Used (1 is all training data, 0 is no training data, etc.)
@@ -128,7 +112,9 @@ model = torch.nn.Sequential(torch.nn.Linear(input_dimension, hidden_dimension_1)
                             torch.nn.ReLU(),
                             torch.nn.Linear(hidden_dimension_1, hidden_dimension_2),
                             torch.nn.ReLU(),
-                            torch.nn.Linear(hidden_dimension_2, output_dimension),
+                            torch.nn.Linear(hidden_dimension_2, hidden_dimension_3),
+                            torch.nn.ReLU(),
+                            torch.nn.Linear(hidden_dimension_3, output_dimension),
                             torch.nn.Softmax(dim=1)).to(device)
 
 # Specify Loss Function
