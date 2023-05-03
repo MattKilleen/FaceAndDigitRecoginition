@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf  # I only used TensorFlow to import the dataset - nothing to do with the actual deep learning task
 import torch
 import time
 import os
@@ -8,34 +7,11 @@ import math
 device = torch.device('cpu')
 
 # 3000 Decay:
-# 3000, 3e-7 = 0.535
-# 2500, 3e-7 = 0.484
-# 3500, 3e-7 = 0.479
-# 2000, 3e-7 = 0.439
-
-
-# 10000 Decay:
-# 3000, 3e-7 = 0.378
-
-
-# 1000 Decay:
-# 2500, 3e-7 = 0.42
-# 3000, 3e-7 = 0.359
-
-
-# Before Decaying LR Adjustment:
-# 2500, 3e-7 = 0.504
-# 2000, 3e-7 = 0.39
-# 2000, 6e-7 = 0.371
-# 2000, 1e-7 = 0.356
-# 2000, 5e-7 = 0.352
-# 2500, 3e-7 = 0.272
-# 3000, 6e-7 = 0.22
-# 2500, 3e-7 = 0.163
+# 7000, 4e-7 = 0.707 - WINNER
 
 # Set Hyperparameters
-num_epochs = 3000
-learning_rate = 3e-7
+num_epochs = 7000
+learning_rate = 4e-7
 decay_factor = 3000
 
 # Set Dimensions of Each Layer
