@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf  # I only used TensorFlow to import the dataset - nothing to do with the actual deep learning task
 import torch
 import time
 import os
