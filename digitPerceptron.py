@@ -99,6 +99,13 @@ for i in range(len(x_test_raw)):
 
 ### YOUR CODE TO SET UP MODEL STRUCTURE HERE
 
+
+def predict(row, weights):
+    activation = weights[0]
+    for i in range(len(row)-1):
+        activation += weights[i + 1] * row[i]
+    return 1.0 if activation >= 0.0 else 0.0
+
 # Record Training Start Time
 start_time = time.time()
 
