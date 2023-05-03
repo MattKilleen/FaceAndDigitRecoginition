@@ -44,17 +44,15 @@ class PerceptronClassifier:
     (and thus represents a vector a values).
     """
 
-        self.features = list(trainingData[0].keys())  # could be useful later
-        # DO NOT ZERO OUT YOUR WEIGHTS BEFORE STARTING TRAINING, OR
-        # THE AUTOGRADER WILL LIKELY DEDUCT POINTS.
+        self.features = list(trainingData[0].keys())
 
         for iteration in range(self.max_iterations):
             print("Starting iteration ", iteration, "...")
             for i in range(len(trainingData)):
-                max_label = ""  # y'
+                max_label = ""
                 max_score = -100
                 f = trainingData[i]
-                for label in list(set(trainingLabels)):  # y''
+                for label in list(set(trainingLabels)):
                     w = self.weights[label]
                     score = 0
                     for feature, value in f.iteritems():
