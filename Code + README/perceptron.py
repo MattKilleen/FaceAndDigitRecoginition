@@ -46,23 +46,24 @@ class PerceptronClassifier:
 
         self.features = list(trainingData[0].keys())
 
-        for iteration in range(self.max_iterations):
-            print("Starting iteration ", iteration, "...")
-            for i in range(len(trainingData)):
-                max_label = ""
-                max_score = -100
-                f = trainingData[i]
-                for label in list(set(trainingLabels)):
-                    w = self.weights[label]
+        for i in range(self.max_iterations):
+            print("Starting iteration ", i, "...")
+            for j in range(len(trainingData)):
+
+                maxLabel = ""
+                maxScore = -100
+                f = trainingData[j]
+                for l in list(set(trainingLabels)):
+                    weight = self.weights[l]
                     score = 0
                     for feature, value in f.iteritems():
-                        score += value * w[feature]
-                    if score > max_score:
-                        max_score = score
-                        max_label = label
-                if max_label is not trainingLabels[i]:
-                    self.weights[trainingLabels[i]] += f
-                    self.weights[max_label] -= f
+                        score += value * weight[feature]
+                    if score > maxScore:
+                        maxScore = score
+                        maxLabel = l
+                if maxLabel is not trainingLabels[j]:
+                    self.weights[trainingLabels[j]] += f
+                    self.weights[maxLabel] -= f
 
     def classify(self, data):
         """
@@ -84,12 +85,10 @@ class PerceptronClassifier:
     Returns a list of the 100 features with the greatest weight for some label
     """
         featuresWeights = []
-
         weights = self.weights[label]
-
         for i in range(100):
             weight = weights.argMax()
             featuresWeights.append(weight)
-            weights[weight] -= 99999999
+            weights[weight] = weights[weight] - 99999999
 
         return featuresWeights
